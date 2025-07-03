@@ -1,0 +1,43 @@
+# Informasi Akun Login - Sistem Ini
+
+Sistem login ini menggunakan database MySQL untuk menyimpan dan memverifikasi data pengguna. Tabel yang digunakan adalah `tbl_user`.
+
+## Struktur Tabel `tbl_user`
+
+| Kolom       | Tipe Data       | Keterangan                           |
+|-------------|------------------|---------------------------------------|
+| id_user     | INT (AUTO_INCREMENT) | Primary Key, ID unik untuk user   |
+| username    | VARCHAR          | Username yang digunakan untuk login  |
+| password    | VARCHAR          | Password dalam bentuk **plaintext**  |
+| role        | VARCHAR          | Peran pengguna (admin/editor)        |
+
+> ⚠️ **Catatan Keamanan**: Password disimpan dalam bentuk teks biasa (plaintext), sehingga **tidak aman untuk produksi**. Disarankan menggunakan `password_hash()` dan `password_verify()` untuk keamanan lebih baik.
+
+## Data Contoh (Dummy)
+
+| id_user | username | password  | role   |
+|---------|----------|-----------|--------|
+| 1       | admin    | admin123  | admin  |
+| 2       | Nabil    | nabil     | admin  |
+| 3       | Editor   | editor    | editor |
+
+## Peran (Role)
+
+- `admin` → Memiliki akses penuh (pengelolaan user, artikel, dsb.)
+- `editor` → Hanya dapat mengelola artikel milik sendiri
+
+## Alur Login Singkat
+
+1. User mengisi form login (username & password).
+2. Sistem mencocokkan data dengan yang ada di tabel `tbl_user`.
+3. Jika cocok:
+   - Sistem menyimpan data ke `$_SESSION`.
+   - Sistem mengarahkan ke halaman sesuai role:
+     - `admin` → `admin/beranda_admin.php`
+     - `editor` → `editor/beranda_editor.php`
+4. Jika tidak cocok:
+   - Tampilkan pesan "Username atau Password salah."
+
+---
+
+📌 File ini digunakan sebagai dokumentasi dasar untuk pengelolaan akun login dalam proyek berbasis PHP dan MySQL.
